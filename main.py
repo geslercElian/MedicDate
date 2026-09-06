@@ -3,8 +3,3 @@
 
 print("BIENVENID@ AL SISTEMA DE GESTION DE CITAS MEDICAS")
 
-print("""
-1. Registrar
-""")
-
-opcion_User = input("    Elija lo que desea realizar:    ")
