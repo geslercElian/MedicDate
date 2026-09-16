@@ -10,6 +10,7 @@ print("BIENVENID@ AL SISTEMA DE GESTION DE CITAS MEDICAS")
 
 Usuario = str(input('Ingrese su usuario: '))
 
-contraseña = str(input('Ingrese su contraseña')) 
+contraseña = str(input('Ingrese su contraseña'))
+
 
 
