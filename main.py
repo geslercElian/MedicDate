@@ -1,9 +1,9 @@
 #PROYECTO INTEGRADOR
 #DESAROLLO DE UN PROGRAMA EN LNG PYTHON ENFOCADO EN LA GESTION DE CITAS MEDICAS EN PUESTOS DE SALUD DE LA CIUDAD DE LEON
 
-import  Medico, Admin, mensajes, sqlite3
+import  Medico, Admin, mensajes, sqlite3 as sql
 
-conexion = sqlite3.connect('dataBase.db')
+conexion = sql.connect('dataBase.db')
 
 
 print("BIENVENID@ AL SISTEMA DE GESTION DE CITAS MEDICAS")
