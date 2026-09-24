@@ -3,7 +3,7 @@
 
 import  Medico, Admin, mensajes, sqlite3
 
-conexion = sqlite3.connect('dataBase.db')
+
 
 
 print("BIENVENID@ AL SISTEMA DE GESTION DE CITAS MEDICAS")
