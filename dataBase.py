@@ -1,13 +1,16 @@
 import sqlite3 as sql
+import os
 print('Base de datos')
 
 def crearDB():
-    conn = sql.connect('usuarios.db')
+    ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
+    conn = sql.connect(ruta_db)
     conn.commit()
     conn.close()
 
 def crearTabla():
-    conn = sql.connect('usuarios.db')
+    ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
+    conn = sql.connect(ruta_db)
     cursor = conn.cursor()
     cursor.execute(
         """CREATE TABLE MEDICOS(
@@ -20,7 +23,8 @@ def crearTabla():
     conn.close()
 
 def insertRow(nombreMedic, especialidad, horario):
-    conn = sql.connect('usuarios.db')
+    ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
+    conn = sql.connect(ruta_db)
     cursor = conn.cursor()
     instruccion = f"INSERT INTO MEDICOS VALUES ('{nombreMedic}', '{especialidad}', '{horario}')"
     cursor.execute(instruccion)
@@ -32,4 +36,5 @@ def insertRow(nombreMedic, especialidad, horario):
 if __name__ == '__main__':
     #crearDB()
     #crearTabla()
-    insertRow('Gesler', 'Medico General', '8 am - 2 pm')
+    
+    insertRow('Luis', 'Medico General', '8 am - 4pm')
