@@ -7,3 +7,4 @@ Funciones que ha de tener el medico.
 3. Confirmar o cancelar las citas.
 4. Ver el historial de las citas por pacientes.
 """)
+print("Viva la vida y la muerte")
