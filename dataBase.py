@@ -37,4 +37,4 @@ if __name__ == '__main__':
     #crearDB()
     #crearTabla()
     
-    insertRow('Luis', 'Medico General', '8 am - 4pm')
+    insertRow('Luis', 'Medico General', '8 am - 4pm') 
