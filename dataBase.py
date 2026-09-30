@@ -36,5 +36,5 @@ def insertRow(nombreMedic, especialidad, horario):
 if __name__ == '__main__':
     #crearDB()
     #crearTabla()
-    
+    pass
     #insertRow('Luis', 'Medico General', '8 am - 4pm')
