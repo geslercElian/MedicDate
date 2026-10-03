@@ -6,7 +6,7 @@ def crearDB():
     conn.commit()
     conn.close()
 
-def crearTabla():
+def crearTBMd():
     conn = sql.connect('usuarios.db')
     cursor = conn.cursor()
     cursor.execute(
@@ -19,7 +19,7 @@ def crearTabla():
     conn.commit()
     conn.close()
 
-def insertRow(nombreMedic, especialidad, horario):
+def insertRowMd(nombreMedic, especialidad, horario):
     conn = sql.connect('usuarios.db')
     cursor = conn.cursor()
     instruccion = f"INSERT INTO MEDICOS VALUES ('{nombreMedic}', '{especialidad}', '{horario}')"
@@ -27,9 +27,31 @@ def insertRow(nombreMedic, especialidad, horario):
     conn.commit()
     conn.close()
 
+def crearTBPc():
+    conn = sql.connect('usuarios.db')
+    cursor = conn.cursor()
+    cursor.execute(
+            """CREATE TABLE PACIENTES(
+                name text,
+                contacto text,
+                identificacion text
+            )"""
+        )
+    conn.commit()
+    conn.close()
 
+def insertRowPC(nombrePC, contacto, identificacion):
+    conn = sql.connect('usuarios.db')
+    cursor = conn.cursor()
+    instruccion = f"INSERT INTO PACIENTES VALUES ('{nombrePC}', '{contacto}', '{identificacion}')"
+    cursor.execute(instruccion)
+    conn.commit()
+    conn.close()
+    
 
 if __name__ == '__main__':
     #crearDB()
     #crearTabla()
-    insertRow('Gesler', 'Medico General', '8 am - 2 pm')
+    #crearTBPc()
+    #insertRowMd('Gesler', 'Medico General', '8 am - 2 pm')
+    insertRowPC("Luis", "57900190", "282567896F")
