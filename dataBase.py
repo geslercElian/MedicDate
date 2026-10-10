@@ -1,13 +1,16 @@
 import sqlite3 as sql
+import os
 print('Base de datos')
 
 def crearDB():
-    conn = sql.connect('usuarios.db')
+    ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
+    conn = sql.connect(ruta_db)
     conn.commit()
     conn.close()
 
-def crearTBMd():
-    conn = sql.connect('usuarios.db')
+def crearTBmd():
+    ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
+    conn = sql.connect(ruta_db)
     cursor = conn.cursor()
     cursor.execute(
         """CREATE TABLE MEDICOS(
@@ -19,8 +22,25 @@ def crearTBMd():
     conn.commit()
     conn.close()
 
+def crearTBpc():
+    ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
+    conn = sql.connect(ruta_db)
+    cursor = conn.cursor()
+    cursor.execute(
+            """CREATE TABLE MEDICOS(
+                name text,
+                especialidad text,
+                horarios text
+            )"""
+        )
+    conn.commit()
+    conn.close()
+
+
+
 def insertRowMd(nombreMedic, especialidad, horario):
-    conn = sql.connect('usuarios.db')
+    ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
+    conn = sql.connect(ruta_db)
     cursor = conn.cursor()
     instruccion = f"INSERT INTO MEDICOS VALUES ('{nombreMedic}', '{especialidad}', '{horario}')"
     cursor.execute(instruccion)
@@ -52,6 +72,5 @@ def insertRowPC(nombrePC, contacto, identificacion):
 if __name__ == '__main__':
     #crearDB()
     #crearTabla()
-    #crearTBPc()
-    #insertRowMd('Gesler', 'Medico General', '8 am - 2 pm')
-    insertRowPC("Luis", "57900190", "282567896F")
+    pass
+    #insertRow('Luis', 'Medico General', '8 am - 4pm')
