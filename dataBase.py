@@ -8,7 +8,7 @@ def crearDB():
     conn.commit()
     conn.close()
 
-def crearTabla():
+def crearTBmd():
     ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
     conn = sql.connect(ruta_db)
     cursor = conn.cursor()
@@ -22,7 +22,23 @@ def crearTabla():
     conn.commit()
     conn.close()
 
-def insertRow(nombreMedic, especialidad, horario):
+def crearTBpc():
+    ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
+    conn = sql.connect(ruta_db)
+    cursor = conn.cursor()
+    cursor.execute(
+            """CREATE TABLE MEDICOS(
+                name text,
+                especialidad text,
+                horarios text
+            )"""
+        )
+    conn.commit()
+    conn.close()
+
+
+
+def insertRowMd(nombreMedic, especialidad, horario):
     ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
     conn = sql.connect(ruta_db)
     cursor = conn.cursor()
