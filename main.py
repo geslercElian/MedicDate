@@ -57,7 +57,7 @@ if num == 1:
                 ''')
 
         elif accion == 3:
-            print('Funcion en desarrollo')
+            print('Funcion en desarrollo.')
 
         elif accion == 4:
             print('Funcion en desarrollo')
