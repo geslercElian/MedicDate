@@ -1,7 +1,7 @@
 #PROYECTO INTEGRADOR
 #DESAROLLO DE UN PROGRAMA EN LNG PYTHON ENFOCADO EN LA GESTION DE CITAS MEDICAS EN PUESTOS DE SALUD DE LA CIUDAD DE LEON
 
-#import  Medico, Admin, mensajes, sqlite3
+from dataBase import insertFilaPC
 
 print("=====Bienvenido a MedicDate.=====")
 
@@ -36,6 +36,8 @@ if num == 1:
             contacto = str(input('Contacto: '))
             edadP = str(input('Edad: '))
             id = str(input('Identificacion: '))
+            #Se ejecuta la funcion
+            insertFilaPC(nombP,contacto,id, edadP)
             print(f'''
                 Usuario creado exitosamente:
                 {nombP}

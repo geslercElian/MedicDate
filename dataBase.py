@@ -48,29 +48,42 @@ def insertRowMd(nombreMedic, especialidad, horario):
     conn.close()
 
 def crearTBPc():
+    '''Pacientes'''
     conn = sql.connect('usuarios.db')
     cursor = conn.cursor()
     cursor.execute(
-            """CREATE TABLE PACIENTES(
+            """CREATE TABLE PACIENT(
                 name text,
                 contacto text,
-                identificacion text
+                identificacion text,
+                edad text
             )"""
         )
     conn.commit()
     conn.close()
 
-def insertRowPC(nombrePC, contacto, identificacion):
+def insertFilaPC(nombrePC = str, contacto = str, identificacion = str, edad = str):
+    '''Pide los datos basicos del paciente.'''
     conn = sql.connect('usuarios.db')
     cursor = conn.cursor()
-    instruccion = f"INSERT INTO PACIENTES VALUES ('{nombrePC}', '{contacto}', '{identificacion}')"
+    instruccion = f"INSERT INTO PACIENT VALUES ('{nombrePC}', '{contacto}', '{identificacion}', '{edad}')"
+    cursor.execute(instruccion)
+    conn.commit()
+    conn.close()
+
+def eliminaTb():
+    conn = sql.connect('usuarios.db')
+    cursor = conn.cursor()
+    instruccion = f"DROP TABLE PACIENTES"
     cursor.execute(instruccion)
     conn.commit()
     conn.close()
     
+    
 
 if __name__ == '__main__':
     #crearDB()
-    #crearTabla()
+    #crearTBPc()
     pass
-    #insertRow('Luis', 'Medico General', '8 am - 4pm')
+    # eliminaTb()
+    #insertFilaPC()
