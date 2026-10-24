@@ -59,7 +59,8 @@ if num == 1:
                 ''')
 
         elif accion == 3:
-            print('Funcion en desarrollo.')
+            busUser = str(input('Ingrese el nombre del usuario: '))
+            
 
         elif accion == 4:
             print('Funcion en desarrollo')
