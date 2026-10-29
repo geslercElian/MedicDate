@@ -1,15 +1,14 @@
 #PROYECTO INTEGRADOR
 #DESAROLLO DE UN PROGRAMA EN LNG PYTHON ENFOCADO EN LA GESTION DE CITAS MEDICAS EN PUESTOS DE SALUD DE LA CIUDAD DE LEON
-
-from dataBase import insertFilaPC
+import dataBase
 
 print("=====Bienvenido a MedicDate.=====")
 
-print(  '=====Inicie sesion====='   )
+print(  '    =====Inicie sesion=====     '   )
 
 print("""
-        SI ES ADMIN INGRESE '1'
-        SI ES MEDICO INGRESE '2'
+      SI ES ADMIN INGRESE '1'
+      SI ES MEDICO INGRESE '2'
     """)
 
 
@@ -18,7 +17,9 @@ num = int(input('Ingrese el numero: '))
 
 if num == 1:
     admUser = str(input('Ingrese su usuario : '))
+
     admPassw = str(input('Ingrese su contraseña: '))
+
     if admUser == 'Gesler Calero' and admPassw == '123':
         print(f'''
         Bienvendo {admUser}
@@ -30,27 +31,35 @@ if num == 1:
         ''')
     
         accion = int(input('Ingrese el numero de la accion que desea ralizar: '))
+
         if accion == 1:
-            print('Ingrese los datos del paciente:')
-            nombP = str(input('Nombre completo:'))
-            contacto = str(input('Contacto: '))
-            edadP = str(input('Edad: '))
-            id = str(input('Identificacion: '))
-            #Se ejecuta la funcion
-            insertFilaPC(nombP,contacto,id, edadP)
-            print(f'''
-                Usuario creado exitosamente:
-                {nombP}
-                {contacto}
-                {edadP}
-                {id}
-                ''')
+            
+            while True:
+                
+                print('Ingrese los datos del paciente o salir. ')
+                nombP = str(input('Nombre completo: '))
+                if nombP.lower() == 'salir':
+                    break
+                contacto = str(input('Contacto: '))
+                edadP = str(input('Edad: '))
+                id = str(input('Identificacion: '))
+                #Se ejecuta la funcion
+                dataBase.insertFilaPC(nombP,contacto,id, edadP)
+                print(f'''
+                    Usuario creado exitosamente:
+                    {nombP}
+                    {contacto}
+                    {edadP}
+                    {id}
+                    ''')
+                
             
         elif accion == 2:
             print('Ingrese los datos del medico: ')
             nombM = str(input('Nombre completo: '))
             esp = str(input('Especialidad del medico: '))
             hor = str (input('Ingrese el horario del medico: '))
+            dataBase.insertRowMd(nombM, esp, hor)
             print(f'''
                 Nuevo medico creado:
                 Nombre: {nombM}
@@ -59,8 +68,13 @@ if num == 1:
                 ''')
 
         elif accion == 3:
-            busUser = str(input('Ingrese el nombre del usuario: '))
-            
+            busUser = str(input('Busque un usuario : '))
+            paciente, medico = dataBase.buscar_usuario(busUser)
+            usuarios = dataBase.mostrar_user(paciente, medico)
+            usuario = dataBase.selecionar_user(usuarios)
+            tipo = dataBase.tipo_user(usuario)
+            dataBase.mostrar_campos(usuario)
+            campo = dataBase.selecionar_campos(usuario)
 
         elif accion == 4:
             print('Funcion en desarrollo')

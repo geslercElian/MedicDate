@@ -25,7 +25,7 @@ def crearTBmd():
 
 
 
-def insertRowMd(nombreMedic, especialidad, horario):
+def insertRowMd(nombreMedic = str, especialidad = str, horario = str):
     ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
     conn = sql.connect(ruta_db)
     cursor = conn.cursor()
@@ -69,13 +69,85 @@ def buscar_usuario(busqueda=str):
     cursor.execute(instruccion_paciente, (f'%{busqueda}%',))
     paciente = cursor.fetchall()
 
-    instruccion_medico = "SELECT * FROM MEDICOS WHERE name LIKE ?"
+    instruccion_medico = "SELECT * FROM MEDICO WHERE name LIKE ?"
     cursor.execute(instruccion_medico, (f'%{busqueda}%',))
     medicos = cursor.fetchall()
 
     cursor.close()
 
     return paciente, medicos
+
+def mostrar_user(pacientes, medicos):
+    usuarios = []
+
+    contador = 1
+
+    print('\nPacientes')
+
+    for paciente in pacientes:
+        print(f'{contador}. {paciente[0]}')
+        usuarios.append(('Paciente', paciente))
+        contador += 1
+
+    print('\nMedicos')
+
+    for medico in medicos:
+        print(f'{contador}. {medico[0]}')
+        usuarios.append(('medico', medico))
+        contador += 1
+
+    return usuarios
+
+def selecionar_user(usuarios):
+    seleccion = int(input('\nSeleccione el usuario que desea modificar: '))
+    usuario = usuarios[seleccion - 1]
+    return usuario
+
+def tipo_user(usuario):
+    tipo = usuario[0]
+    return tipo
+
+def mostrar_campos(usuario):
+    tipo = usuario[0]
+
+    if tipo == 'Paciente':
+        print('\nSeleccione lo que va a modificar: ')
+        print('''
+            1. Nombre
+            2. Contacto
+            3. Identificacion
+            4. Edad
+        ''')
+    elif tipo == 'medico':
+        print('\nSeleccione lo que va a modificar: ')
+        print('''
+            1. Nombre
+            2. Especialidad
+            3. Horario
+        ''')
+
+def selecionar_campos(usuario):
+    tipo = usuario[0]
+
+    if tipo == 'Paciente':
+        seleccion = int(input('\nSeleccione el dato que desea modificar: '))
+
+
+        campos = {
+            1: 'nombre',
+            2: 'contacto',
+            3: 'identificacion',
+            4: 'edad'
+        }
+    elif tipo == 'medico':
+        seleccion = int(input('\nSeleccione el dato que desea modificar: '))
+
+        campos = {
+            1: 'nombre',
+            2: 'especialidad',
+            3: 'horario'
+        }
+    return campos[seleccion]
 
 def eliminaTb():
     ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
@@ -93,5 +165,6 @@ if __name__ == '__main__':
     #crearTBmd()
     #nombre = 'Gesler'
     #buscar_usuario(nombre)
-    eliminaTb()
+    pass
+    #eliminaTb()
     #insertFilaPC()
