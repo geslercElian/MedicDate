@@ -1,6 +1,7 @@
 #PROYECTO INTEGRADOR
 #DESAROLLO DE UN PROGRAMA EN LNG PYTHON ENFOCADO EN LA GESTION DE CITAS MEDICAS EN PUESTOS DE SALUD DE LA CIUDAD DE LEON
 import dataBase
+import time
 
 print("=====Bienvenido a MedicDate.=====")
 
@@ -21,6 +22,8 @@ if num == 1:
     admPassw = str(input('Ingrese su contraseña: '))
     #Acciones que puede realizar el usuario como administrador.
     if admUser == 'Gesler Calero' and admPassw == '123':
+        print('Por favor espera....')
+        time.sleep(3)
         print(f'''
         Bienvendo {admUser}
         Elija lo que desea hacer:
@@ -88,6 +91,7 @@ elif num == 2:
     MdUser = str(input('Ingrese su usuario : '))
     MdPassw = str(input('Ingrese su contraseña: '))
     if MdUser == 'Gesler Calero' and MdPassw == '123':
+            
             print(f'''
             Bienvendo {MdUser}
             Elija lo que desea hacer:
