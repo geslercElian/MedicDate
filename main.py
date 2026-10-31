@@ -11,27 +11,27 @@ print("""
       SI ES MEDICO INGRESE '2'
     """)
 
+#Selección de usuario para ingresar al sistema.
+num = int(input('Ingrese el número: '))
 
-num = int(input('Ingrese el numero: '))
-
-
+#Entrada de usuario como administrador.
 if num == 1:
     admUser = str(input('Ingrese su usuario : '))
 
     admPassw = str(input('Ingrese su contraseña: '))
-
+    #Acciones que puede realizar el usuario como administrador.
     if admUser == 'Gesler Calero' and admPassw == '123':
         print(f'''
         Bienvendo {admUser}
         Elija lo que desea hacer:
         1. Crear usuario (Paciente)
-        2. Crear usuario (Medico)
+        2. Crear usuario (Médico)
         3. Gestionar Usuarios
         4. Reportes de citas
         ''')
-    
-        accion = int(input('Ingrese el numero de la accion que desea ralizar: '))
-
+        #seleccion de la acción a realizar.
+        accion = int(input('Ingrese el número de la acción que desea realizar: '))
+        #Crear usuario paciente.
         if accion == 1:
             
             while True:
@@ -42,31 +42,32 @@ if num == 1:
                     break
                 contacto = str(input('Contacto: '))
                 edadP = str(input('Edad: '))
-                id = str(input('Identificacion: '))
-                #Se ejecuta la funcion
+                id = str(input('Identificación: '))
+                #Se ejecuta la función
                 dataBase.insertFilaPC(nombP,contacto,id, edadP)
                 print(f'''
-                    Usuario creado exitosamente:
+                    Usuario creado éxitosamente:
                     {nombP}
                     {contacto}
                     {edadP}
                     {id}
                     ''')
                 
-            
+        #Crear usuario médico.     
         elif accion == 2:
-            print('Ingrese los datos del medico: ')
+            print('Ingrese los datos del médico: ')
             nombM = str(input('Nombre completo: '))
-            esp = str(input('Especialidad del medico: '))
-            hor = str (input('Ingrese el horario del medico: '))
+            esp = str(input('Especialidad del médico: '))
+            hor = str (input('Ingrese el horario del médico: '))
             dataBase.insertRowMd(nombM, esp, hor)
             print(f'''
-                Nuevo medico creado:
+                Nuevo médico creado:
                 Nombre: {nombM}
                 Especialida: {esp}
                 Horario: {hor}
                 ''')
-
+        
+        #Gestionar usuarios.
         elif accion == 3:
             busUser = str(input('Busque un usuario : '))
             paciente, medico = dataBase.buscar_usuario(busUser)
@@ -75,12 +76,14 @@ if num == 1:
             tipo = dataBase.tipo_user(usuario)
             dataBase.mostrar_campos(usuario)
             campo = dataBase.selecionar_campos(usuario)
-
+        
+        #Reportes de citas.
         elif accion == 4:
             print('Funcion en desarrollo')
     else:
          print('ACCESO DENEGADO.')
 
+#Entrada de usuario como médico.
 elif num == 2:
     MdUser = str(input('Ingrese su usuario : '))
     MdPassw = str(input('Ingrese su contraseña: '))
@@ -93,4 +96,4 @@ elif num == 2:
             3. Cancelar Cita
             4. Historial de paciente.
         ''')
-            accion = int(input('Ingrese el numero de la accion que desea ralizar: '))
+            accion = int(input('Ingrese el número de la acción que desea ralizar: '))
