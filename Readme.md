@@ -24,16 +24,9 @@ Inicio de la documentacion del programa
 PROGRAMACION DEL PROYECTO DE CITAS MEDICAS
 
 
-No se va a tener una estructura definida de como programar, por ende, todas las variables, funciones etc, seran escritas cada que se cree alguna.
 
 
-VARIABLES GLOBALES
 
-- USUARIOS
-- ID
-- NOMBRE PACIENTE
-- FECHA - HORA (CITA)
-- AREA DE SALUD
-- FECHA - HORA (CREACION)
+
 
 
