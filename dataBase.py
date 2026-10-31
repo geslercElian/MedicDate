@@ -2,13 +2,17 @@ import sqlite3 as sql
 import os
 print('Base de datos')
 
+
+
 def crearDB():
+    '''Se crea la base de datos.'''
     ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
     conn = sql.connect(ruta_db)
     conn.commit()
     conn.close()
 
 def crearTBmd():
+    '''Crea la tabla de los medicos'''
     ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
     conn = sql.connect(ruta_db)
     cursor = conn.cursor()
@@ -26,6 +30,7 @@ def crearTBmd():
 
 
 def insertRowMd(nombreMedic = str, especialidad = str, horario = str):
+    '''Pide e inserta los medicos en su respectiva tabla.'''
     ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
     conn = sql.connect(ruta_db)
     cursor = conn.cursor()
@@ -35,7 +40,7 @@ def insertRowMd(nombreMedic = str, especialidad = str, horario = str):
     conn.close()
 
 def crearTBPc():
-    '''Pacientes'''
+    '''Crea la tabla de los pacientes.'''
     ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
     conn = sql.connect(ruta_db)
     cursor = conn.cursor()
@@ -51,7 +56,7 @@ def crearTBPc():
     conn.close()
 
 def insertFilaPC(nombrePC = str, contacto = str, identificacion = str, edad = str):
-    '''Pide los datos basicos del paciente.'''
+    '''Pide e inserta los datos del paciente en su respectiva tabla.'''
     ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
     conn = sql.connect(ruta_db)
     cursor = conn.cursor()
@@ -61,7 +66,7 @@ def insertFilaPC(nombrePC = str, contacto = str, identificacion = str, edad = st
     conn.close()
 
 def buscar_usuario(busqueda=str):
-    '''Busca los usuarios relacionados'''
+    '''Busca los usuarios relacionados al nombre que busca.'''
     ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
     conn = sql.connect(ruta_db)
     cursor = conn.cursor() 
@@ -78,6 +83,7 @@ def buscar_usuario(busqueda=str):
     return paciente, medicos
 
 def mostrar_user(pacientes, medicos):
+    '''Muestra los usuarios encontrados en cada tabla.'''
     usuarios = []
 
     contador = 1
@@ -99,6 +105,7 @@ def mostrar_user(pacientes, medicos):
     return usuarios
 
 def selecionar_user(usuarios):
+    '''Selecciona el usuario a editar.'''
     seleccion = int(input('\nSeleccione el usuario que desea modificar: '))
     usuario = usuarios[seleccion - 1]
     return usuario
@@ -108,6 +115,7 @@ def tipo_user(usuario):
     return tipo
 
 def mostrar_campos(usuario):
+    '''Muestra los campos disponibles para editar'''
     tipo = usuario[0]
 
     if tipo == 'Paciente':
@@ -127,6 +135,7 @@ def mostrar_campos(usuario):
         ''')
 
 def selecionar_campos(usuario):
+    '''Selecciona el campo a editar'''
     tipo = usuario[0]
 
     if tipo == 'Paciente':
