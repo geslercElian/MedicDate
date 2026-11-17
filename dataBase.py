@@ -1,6 +1,7 @@
 import sqlite3 as sql
 import os
 from datetime import datetime
+import Admin
 
 def crearDB():
     '''Se crea la base de datos.'''
@@ -163,13 +164,13 @@ CREATE TABLE IF NOT EXISTS CITAS (
 
 def cancelar_cita_medico(nombre_medico):
 
-    citas = mostrar_citas(nombre_medico)
+    citas = Admin.mostrar_citas(nombre_medico)
 
     if not citas:
         print('No hay citas registradas.')
         return
 
-    listar_citas(citas)
+    Admin.listar_citas(citas)
 
     ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
     conn = sql.connect(ruta_db)
@@ -243,7 +244,7 @@ def mostrar_citas_medico(nombre_medico):
         if not citas:
             print('\nNo tienes citas pendientes.')
         else:
-            listar_citas(citas)
+            Admin.listar_citas(citas)
 
         print('''
         1. Consultar nuevamente
