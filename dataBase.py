@@ -1,8 +1,6 @@
 import sqlite3 as sql
 import os
-print('Base de datos')
-
-
+from datetime import datetime
 
 def crearDB():
     '''Se crea la base de datos.'''
@@ -27,18 +25,6 @@ def crearTBmd():
     conn.close()
 
 
-
-
-def insertRowMd(nombreMedic = str, especialidad = str, horario = str):
-    '''Pide e inserta los medicos en su respectiva tabla.'''
-    ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
-    conn = sql.connect(ruta_db)
-    cursor = conn.cursor()
-    instruccion = f"INSERT INTO MEDICO VALUES ('{nombreMedic}', '{especialidad}', '{horario}')"
-    cursor.execute(instruccion)
-    conn.commit()
-    conn.close()
-
 def crearTBPc():
     '''Crea la tabla de los pacientes.'''
     ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
@@ -52,16 +38,6 @@ def crearTBPc():
                 edad text
             )"""
         )
-    conn.commit()
-    conn.close()
-
-def insertFilaPC(nombrePC = str, contacto = str, identificacion = str, edad = str):
-    '''Pide e inserta los datos del paciente en su respectiva tabla.'''
-    ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
-    conn = sql.connect(ruta_db)
-    cursor = conn.cursor()
-    instruccion = f"INSERT INTO PACIENT VALUES ('{nombrePC}', '{contacto}', '{identificacion}', '{edad}')"
-    cursor.execute(instruccion)
     conn.commit()
     conn.close()
 
@@ -81,6 +57,7 @@ def buscar_usuario(busqueda=str):
     cursor.close()
 
     return paciente, medicos
+
 
 def mostrar_user(pacientes, medicos):
     '''Muestra los usuarios encontrados en cada tabla.'''
@@ -103,12 +80,6 @@ def mostrar_user(pacientes, medicos):
         contador += 1
 
     return usuarios
-
-def selecionar_user(usuarios):
-    '''Selecciona el usuario a editar.'''
-    seleccion = int(input('\nSeleccione el usuario que desea modificar: '))
-    usuario = usuarios[seleccion - 1]
-    return usuario
 
 def tipo_user(usuario):
     tipo = usuario[0]
@@ -158,6 +129,8 @@ def selecionar_campos(usuario):
         }
     return campos[seleccion]
 
+
+
 def eliminaTb():
     ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
     conn = sql.connect(ruta_db)
@@ -166,14 +139,142 @@ def eliminaTb():
     cursor.execute(instruccion)
     conn.commit()
     conn.close()
-    
-    
+
+
+def crearTBcitas():
+    '''Crea la tabla de las citas.'''
+    ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
+    conn = sql.connect(ruta_db)
+    cursor = conn.cursor()
+    cursor.execute("""
+CREATE TABLE IF NOT EXISTS CITAS (
+    id_cita INTEGER PRIMARY KEY AUTOINCREMENT,
+    paciente TEXT,
+    medico TEXT,
+    fecha TEXT,
+    hora TEXT,
+    estado TEXT,
+    descripcion TEXT
+)
+""")
+
+    conn.commit()
+    conn.close()
+
+def cancelar_cita_medico(nombre_medico):
+
+    citas = mostrar_citas(nombre_medico)
+
+    if not citas:
+        print('No hay citas registradas.')
+        return
+
+    listar_citas(citas)
+
+    ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
+    conn = sql.connect(ruta_db)
+    cursor = conn.cursor()
+
+    try:
+        while True:
+
+            id_cita = input('\nIngrese el ID de la cita que desea cancelar (o salir): ')
+
+            if id_cita.lower() == 'salir':
+                print('Volviendo al menú...')
+                break
+
+            if not id_cita.isdigit():
+                print('ID no válido.')
+                continue
+
+            cursor.execute(
+                "SELECT estado FROM CITAS WHERE id_cita = ? AND medico = ?",
+                (id_cita, nombre_medico)
+            )
+
+            cita = cursor.fetchone()
+
+            if cita is None:
+                print('No se encontró la cita o no pertenece a este médico.')
+                continue
+
+            if cita[0] == 'Cancelada':
+                print('Esta cita ya está cancelada.')
+                continue
+
+            cursor.execute(
+                "UPDATE CITAS SET estado = ? WHERE id_cita = ? AND medico = ?",
+                ('Cancelada', id_cita, nombre_medico)
+            )
+
+            conn.commit()
+
+            print('¡Cita cancelada correctamente!')
+
+    finally:
+        cursor.close()
+        conn.close()
+
+
+#=============================TODO LO RELACIONADO A MEDICO==================================================
+
+
+
+
+def mostrar_citas_medico(nombre_medico):
+
+    while True:
+        ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
+        conn = sql.connect(ruta_db)
+        cursor = conn.cursor()
+
+        instruccion = """
+        SELECT * FROM CITAS
+        WHERE medico = ? AND estado = ?
+        """
+        cursor.execute(instruccion, (nombre_medico, 'Pendiente'))
+
+        citas = cursor.fetchall()
+
+        cursor.close()
+        conn.close()
+
+        if not citas:
+            print('\nNo tienes citas pendientes.')
+        else:
+            listar_citas(citas)
+
+        print('''
+        1. Consultar nuevamente
+        2. Volver al menú
+        ''')
+
+        opcion = input('Seleccione una opción: ')
+
+        if opcion == '1':
+            continue
+        elif opcion == '2':
+            break
+        else:
+            print('Opción no válida. Intente nuevamente.')
+
+
+
+
+
+
+
+
+#def obtener_contacto_paciente(nombre_paciente):
+    #
 
 if __name__ == '__main__':
     #crearDB()
     #crearTBmd()
     #nombre = 'Gesler'
     #buscar_usuario(nombre)
+    #crearTBcitas()
     pass
     #eliminaTb()
     #insertFilaPC()
