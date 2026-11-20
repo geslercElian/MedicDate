@@ -264,18 +264,7 @@ CREATE TABLE IF NOT EXISTS CITAS (
     conn.close()
 
 
-def crearTBUsers():
-    ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
-    conn = sql.connect(ruta_db)
-    cursor = conn.cursor()
-    cursor.execute("""
-CREATE TABLE IF NOT EXISTS USERSMEDIC (
-    nombre text,
-    contraseña text
-)
-""")
-    conn.commit()
-    conn.close()
+
 
 def crearTBUSERS():
     ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
@@ -362,17 +351,7 @@ if __name__ == '__main__':
     #nombre = 'Gesler'
     #buscar_usuario(nombre)
     #crearTBcitas()
-    while True:
-                print('Ingresa los datos o ingresa S para terminar.')
-                
-                usuario = str(input('Usuario: '))
-                if usuario == 'S':
-                    break
-                passw = str(input('Contraseña: '))
-                rol = str(input('Rol: '))
-                Asocs = str(input('Ingresa la cuenta asociada: '))
-                
-                registrar_usuario(usuario, passw, rol)
+    asociar_medico('Erling Delgado', 'Erling Delgado')
 
 
     #crearTBUSERS()
