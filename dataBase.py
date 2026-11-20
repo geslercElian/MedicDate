@@ -136,31 +136,14 @@ def eliminaTb():
     ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
     conn = sql.connect(ruta_db)
     cursor = conn.cursor()
-    instruccion = f"DROP TABLE MEDICOS"
+    instruccion = f"DROP TABLE USARIOS"
     cursor.execute(instruccion)
+    print('Tabla eliminada correctamente.')
     conn.commit()
     conn.close()
 
 
-def crearTBcitas():
-    '''Crea la tabla de las citas.'''
-    ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
-    conn = sql.connect(ruta_db)
-    cursor = conn.cursor()
-    cursor.execute("""
-CREATE TABLE IF NOT EXISTS CITAS (
-    id_cita INTEGER PRIMARY KEY AUTOINCREMENT,
-    paciente TEXT,
-    medico TEXT,
-    fecha TEXT,
-    hora TEXT,
-    estado TEXT,
-    descripcion TEXT
-)
-""")
 
-    conn.commit()
-    conn.close()
 
 def cancelar_cita_medico(nombre_medico):
 
@@ -260,11 +243,114 @@ def mostrar_citas_medico(nombre_medico):
         else:
             print('Opción no válida. Intente nuevamente.')
 
+def crearTBcitas():
+    '''Crea la tabla de las citas.'''
+    ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
+    conn = sql.connect(ruta_db)
+    cursor = conn.cursor()
+    cursor.execute("""
+CREATE TABLE IF NOT EXISTS CITAS (
+    id_cita INTEGER PRIMARY KEY AUTOINCREMENT,
+    paciente TEXT,
+    medico TEXT,
+    fecha TEXT,
+    hora TEXT,
+    estado TEXT,
+    descripcion TEXT
+)
+""")
+
+    conn.commit()
+    conn.close()
 
 
+def crearTBUsers():
+    ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
+    conn = sql.connect(ruta_db)
+    cursor = conn.cursor()
+    cursor.execute("""
+CREATE TABLE IF NOT EXISTS USERSMEDIC (
+    nombre text,
+    contraseña text
+)
+""")
+    conn.commit()
+    conn.close()
+
+def crearTBUSERS():
+    ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
+    conn = sql.connect(ruta_db)
+    cursor = conn.cursor()
+    cursor.execute("""
+CREATE TABLE IF NOT EXISTS USUARIOS (
+id_usuario INTEGER PRIMARY KEY AUTOINCREMENT,
+usuario TEXT UNIQUE,
+password TEXT,
+rol TEXT,
+medico TEXT
+)
+    """)
+    conn.commit()
+    conn.close()
+
+def registrar_usuario(usuario, password, rol, medico=None):
+
+    ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
+    conn = sql.connect(ruta_db)
+    cursor = conn.cursor()
+
+    instruccion = """
+    INSERT INTO USUARIOS (usuario, password, rol, medico)
+    VALUES (?, ?, ?, ?)
+    """
+
+    cursor.execute(instruccion, (usuario, password, rol, medico))
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def validar_login(usuario, password):
+
+    ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
+    conn = sql.connect(ruta_db)
+    cursor = conn.cursor()
+
+    instruccion = """
+    SELECT id_usuario, usuario, rol, medico
+    FROM USUARIOS
+    WHERE usuario = ? AND password = ?
+    """
+
+    cursor.execute(instruccion, (usuario, password))
+    resultado = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    return resultado
 
 
+def asociar_medico(usuario, nombre_medico):
 
+    ruta_db = os.path.join(os.path.dirname(__file__), 'usuarios.db')
+    conn = sql.connect(ruta_db)
+    cursor = conn.cursor()
+
+    instruccion = """
+    UPDATE USUARIOS
+    SET medico = ?
+    WHERE usuario = ?
+    """
+
+    cursor.execute(instruccion, (nombre_medico, usuario))
+
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+#Prueba de funcion de registro de usuarios.
+    
 
 
 #def obtener_contacto_paciente(nombre_paciente):
@@ -276,6 +362,20 @@ if __name__ == '__main__':
     #nombre = 'Gesler'
     #buscar_usuario(nombre)
     #crearTBcitas()
-    pass
+    while True:
+                print('Ingresa los datos o ingresa S para terminar.')
+                
+                usuario = str(input('Usuario: '))
+                if usuario == 'S':
+                    break
+                passw = str(input('Contraseña: '))
+                rol = str(input('Rol: '))
+                Asocs = str(input('Ingresa la cuenta asociada: '))
+                
+                registrar_usuario(usuario, passw, rol)
+
+
+    #crearTBUSERS()
+    #crearTBUsers()
     #eliminaTb()
     #insertFilaPC()
