@@ -351,7 +351,17 @@ if __name__ == '__main__':
     #nombre = 'Gesler'
     #buscar_usuario(nombre)
     #crearTBcitas()
-    asociar_medico('Erling Delgado', 'Erling Delgado')
+    while True:
+                print('Ingresa los datos o ingresa S para terminar.')
+                
+                usuario = str(input('Usuario: '))
+                if usuario == 'S':
+                    break
+                passw = str(input('Contraseña: '))
+                rol = str(input('Rol: '))
+                Asocs = str(input('Ingresa la cuenta asociada: '))
+                
+                registrar_usuario(usuario, passw, rol, Asocs)
 
 
     #crearTBUSERS()
